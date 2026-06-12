@@ -72,7 +72,7 @@ curl -X POST http://localhost:8000/students \
 
 ```bash
 # SSH into your EC2 instance
-ssh -i your-key.pem ubuntu@100.55.20.247
+ssh -i ec2-key-pair.pem ubuntu@100.55.20.247
 
 # Install Docker
 sudo apt update && sudo apt install -y docker.io docker-compose-plugin
@@ -87,7 +87,7 @@ docker compose -f docker-compose.prod.yml up -d --build
 
 **GitHub Secrets required:**
 - `EC2_HOST` — your EC2 public IP address
-- `EC2_SSH_KEY` — your private SSH key (contents of .pem file)
+- `EC2_SSH_KEY` — your private SSH key (contents of ec2-key-pair.pem file)
 
 ---
 
