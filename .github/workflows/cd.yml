@@ -17,17 +17,20 @@ jobs:
           username: ubuntu
           key:      ${{ secrets.EC2_SSH_KEY }}
           script: |
-            sudo apt update && sudo apt install -y docker.io docker-compose-plugin
+            set -ex
+            sudo apt-get update
+            sudo apt-get install -y docker.io docker-compose-plugin
             sudo usermod -aG docker ubuntu
-            if [ ! -d "~/devops-project" ]; then
-              git clone https://github.com/Syed-Shaheryar-Shah-2212200/2212200-devops-project ~/devops-project
+            if [ ! -d "$HOME/devops-project" ]; then
+              git clone https://github.com/Syed-Shaheryar-Shah-2212200/2212200-devops-project "$HOME/devops-project"
             fi
-            cd ~/devops-project
-            git pull origin main
+            cd "$HOME/devops-project"
+            git pull origin main || true
             echo "DB_USER=devops_user" > .env.production
             echo "DB_PASSWORD=devops_pass_2212200_prod" >> .env.production
             echo "DB_NAME=devops_db_prod" >> .env.production
             cp .env.production .env
-            sudo docker compose -f docker-compose.prod.yml down
+            sudo docker compose -f docker-compose.prod.yml down || true
             sudo docker compose -f docker-compose.prod.yml up -d --build
+            sudo docker compose -f docker-compose.prod.yml ps
             echo "Deployed at $(date)"
