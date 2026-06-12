@@ -27,3 +27,4 @@ test.db
 # OS
 .DS_Store
 Thumbs.db
+setup_git.sh
