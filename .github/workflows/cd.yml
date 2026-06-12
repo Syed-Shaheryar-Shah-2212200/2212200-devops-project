@@ -18,9 +18,10 @@ jobs:
           key:      ${{ secrets.EC2_SSH_KEY }}
           script: |
             set -ex
-            sudo apt-get update
-            sudo apt-get install -y docker.io docker-compose-plugin
-            sudo usermod -aG docker ubuntu
+            if ! sudo docker compose version >/dev/null 2>&1; then
+              curl -fsSL https://get.docker.com | sudo sh
+              sudo usermod -aG docker ubuntu
+            fi
             if [ ! -d "$HOME/devops-project" ]; then
               git clone https://github.com/Syed-Shaheryar-Shah-2212200/2212200-devops-project "$HOME/devops-project"
             fi
