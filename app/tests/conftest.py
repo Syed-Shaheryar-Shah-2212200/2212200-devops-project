@@ -11,8 +11,8 @@ from app.main import app
 from app.database import Base
 from app.main import get_db
 
-# Use SQLite for local test runs; CI overrides with PostgreSQL
-TEST_DB_URL = "sqlite:///./test.db"
+# Use in-memory SQLite for test runs; CI overrides with PostgreSQL
+TEST_DB_URL = "sqlite:///file:testdb?mode=memory&cache=shared&uri=true"
 
 engine = create_engine(TEST_DB_URL, connect_args={"check_same_thread": False})
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
